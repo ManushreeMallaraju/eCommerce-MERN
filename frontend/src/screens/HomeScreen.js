@@ -4,7 +4,7 @@ import Product from '../components/Product'
 import axios from 'axios'
 
 const HomeScreen = () => {
-    const [products, setProducts] = useState()
+    const [products, setProducts] = useState({})
 
     useEffect(() => {
         //here axios req to load the products on the front-end;
@@ -17,10 +17,14 @@ const HomeScreen = () => {
         fetchProducts();
     }, [])
 
+    // render nothing during the time product is loading
+    if (!products) return null;
+
     return (
         <>
             <h1>Latest Products</h1>
             <Row>
+                {/* TODO:Cannot use .map on the object -> products is an objects */}
                 {products.map(product => ( /**Map through the products and pass each product to the Product Comp */
                     <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                         <Product product={product} />
